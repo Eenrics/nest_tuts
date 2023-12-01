@@ -9,8 +9,12 @@ async function bootstrap() {
     whitelist: true,
     // THIS PROPERTY IN COMBINATION WITH WHILE LIST, ENABLES DISFUCTIONALITY
     forbidNonWhitelisted: true,
-    // 
-    transform: true
+    // TRIES TO TRANSFORM THE TYPE OF INPUTS FROM REQUEST
+    transform: true,
+    // WITH THIS WE DONT HAVE TO USE TYPE CLASS TRANFORMER DECORATOR IMPLICITLY IN OUT DTO
+    transformOptions: {
+      enableImplicitConversion: true
+    }
   }))
   await app.listen(3000);
 }
