@@ -12,6 +12,7 @@ export class CoffeesController {
         return `This action returns one coffee ${id}`;
     }
 
+    // AS A BEST PRACTICE, USE PATH PARAMETERS FOR RESOURCE AND QUERY PARAMETERS TO FILTER OR SORT THAT RESOURCE
     @Get('pagination')
     paginate(@Query() paginationQuery) {
         const { limit, offset } = paginationQuery;
