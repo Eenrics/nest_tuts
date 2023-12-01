@@ -16,7 +16,13 @@ export class CoffeesService {
         private readonly flavorRepository: Repository<Flavor>,
     ) { }
 
-    findAll(paginationQueryDto?: PaginationQueryDto) {
+    findAll() {
+        return this.coffeeRepository.find({
+            relations: ["flavors"]
+        })
+    }
+
+    findAllPaginated(paginationQueryDto: PaginationQueryDto) {
         const { limit, offset } = paginationQueryDto
 
         return this.coffeeRepository.find({

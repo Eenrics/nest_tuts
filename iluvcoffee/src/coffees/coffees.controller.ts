@@ -33,7 +33,7 @@ export class CoffeesController {
     @Get('service/pagination')
     servicePagination(@Query() paginationQuery: PaginationQueryDto) {
         // const {limit, }
-        return this.coffeesService.findAll(paginationQuery);
+        return this.coffeesService.findAllPaginated(paginationQuery);
     }
 
     @Get('service/:id')
