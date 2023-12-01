@@ -1,5 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
+// COMBOSITE INDEX
 @Index(['name', 'type'])
 @Entity()
 export class Event {
