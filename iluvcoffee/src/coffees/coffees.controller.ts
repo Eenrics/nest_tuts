@@ -30,8 +30,10 @@ export class CoffeesController {
     }
 
     @Get('service/:id')
-    serviceOne(@Param('id') id: string) {
-        return this.coffeesService.findOne(id);
+    serviceOne(@Param('id') id: number) {
+        // TRANSFORM SET TO TRUE AT MAIN.TS TRIES TO TRANSFORM THIS TO NUMBER. THIS MIGHT HAVE PERFORMANCE IMPACT
+        console.log(typeof id)
+        return this.coffeesService.findOne('' + id);
     }
 
     @Get(':id')
@@ -53,6 +55,8 @@ export class CoffeesController {
 
     @Post('service')
     createService(@Body() createCoffeeDto: CreateCoffeeDto) {
+        // FALSE IF TRANSFORM IS NOT SET TO TRUE IN MAIN.JS FILE. BUT THIS MIGHT IMPACT PERFORMACE
+        console.log(createCoffeeDto instanceof CreateCoffeeDto)
         return this.coffeesService.create(createCoffeeDto);
     }
 
