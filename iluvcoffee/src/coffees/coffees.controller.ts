@@ -1,15 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
+import { CoffeesService } from './coffees.service';
 
 @Controller('coffees')
 export class CoffeesController {
+    constructor(private readonly coffeesService: CoffeesService) { }
+
     @Get()
     findAll() {
         return 'This action returns all coffees';
-    }
-
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return `This action returns one coffee ${id}`;
     }
 
     // AS A BEST PRACTICE, USE PATH PARAMETERS FOR RESOURCE AND QUERY PARAMETERS TO FILTER OR SORT THAT RESOURCE
@@ -22,6 +20,16 @@ export class CoffeesController {
     @Get('express-res')
     expressRes(@Res() response) {
         response.status(200).send('response using express res');
+    }
+
+    @Get('service')
+    service() {
+        return this.coffeesService.findAll();
+    }
+
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return `This action returns one coffee ${id}`;
     }
 
     @Post()
