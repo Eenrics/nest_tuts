@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -49,10 +51,20 @@ export class CoffeesController {
         return 'This response is gone';
     }
 
+    @Post('service')
+    createService(@Body() createCoffeeDto: CreateCoffeeDto) {
+        return this.coffeesService.create(createCoffeeDto);
+    }
+
     // PATCH UPDATES PARTIAL RESOURCE
     @Patch(':id')
     update(@Param('id') id: string, @Body() body) {
         return `This action updates #${id} coffee with values ${JSON.stringify(body)}`;
+    }
+
+    @Patch('service/:id')
+    updateService(@Param('id') id: string, @Body() updateCoffeDto: UpdateCoffeeDto) {
+        return this.coffeesService.update(id, updateCoffeDto);
     }
 
     // PUT UPDATES ENTIRE RESOURCE
