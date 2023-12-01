@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -16,6 +16,11 @@ export class CoffeesController {
     paginate(@Query() paginationQuery) {
         const { limit, offset } = paginationQuery;
         return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
+    }
+
+    @Get('express-res')
+    expressRes(@Res() response) {
+        response.status(200).send('response using express res');
     }
 
     @Post()
