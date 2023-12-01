@@ -8,7 +8,9 @@ async function bootstrap() {
     // ANY PROPERTY NOT INCLUDED IN WHILE LIST WILL BE REMOVED
     whitelist: true,
     // THIS PROPERTY IN COMBINATION WITH WHILE LIST, ENABLES DISFUCTIONALITY
-    forbidNonWhitelisted: true
+    forbidNonWhitelisted: true,
+    // 
+    transform: true
   }))
   await app.listen(3000);
 }

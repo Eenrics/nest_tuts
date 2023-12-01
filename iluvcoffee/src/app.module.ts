@@ -11,8 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     username: 'postgres',
     password: 'pass123',
     database: 'postgres',
+    // AN ENTITY REPRESENTS A RELATIONSHIP BETWEEN A DATABASE TABLE AND A TYPESCRIPT CLASS
+    // IN NESTJS AN ENTITY IS A CLASS DECORATED WITH @ENTITY() DECORATOR
     autoLoadEntities: true,
     // MAKE SURE TO DISABLE SYNCHRONIZE IN PRODUCTION
+    // AUTOMATICALLY SYNCHRONIZES ENTITIES AND METADATA WITH DATABASE SCHEMA / TABLES
     synchronize: true,
   })],
   controllers: [AppController],
