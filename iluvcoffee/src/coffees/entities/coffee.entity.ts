@@ -15,6 +15,13 @@ export class Coffee {
 
     // @Column('json', { nullable: true })
     @JoinTable()
-    @ManyToMany(type => Flavor, (flavor) => flavor.coffees)
-    flavors: string[];
+    @ManyToMany(
+        type => Flavor,
+        (flavor) => flavor.coffees,
+        {
+            // THIS WILL CREATE NEW FLAVOR IF THE FLAVOR DOES NOT EXIST ON FLAVOR TABLE
+            cascade: true // ['insert', 'update']
+        }
+    )
+    flavors: Flavor[];
 }
