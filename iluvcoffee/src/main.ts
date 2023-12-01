@@ -6,7 +6,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({
     // ANY PROPERTY NOT INCLUDED IN WHILE LIST WILL BE REMOVED
-    whitelist: true
+    whitelist: true,
+    // THIS PROPERTY IN COMBINATION WITH WHILE LIST, ENABLES DISFUCTIONALITY
+    forbidNonWhitelisted: true
   }))
   await app.listen(3000);
 }
