@@ -33,7 +33,8 @@ export class CoffeesController {
     serviceOne(@Param('id') id: number) {
         // TRANSFORM SET TO TRUE AT MAIN.TS TRIES TO TRANSFORM THIS TO NUMBER. THIS MIGHT HAVE SLIGHT PERFORMANCE IMPACT
         console.log(typeof id)
-        return this.coffeesService.findOne('' + id);
+        // return this.coffeesService.findOne('' + id);
+        return this.coffeesService.findOne(id);
     }
 
     @Get(':id')

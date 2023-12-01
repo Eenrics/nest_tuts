@@ -2,22 +2,22 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundExc
 import { Coffee } from './entities/coffee.entity';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CoffeesService {
-    private coffees: Coffee[] = [{
-        id: 1,
-        name: 'Shipwreck Roast',
-        brand: 'Buddy Brew',
-        flavors: ['chocolate', 'vanilla']
-    }]
+    constructor(
+        @InjectRepository(Coffee)
+        private readonly coffeeRepository: Repository<Coffee>,
+    ) { }
 
     findAll() {
-        return this.coffees;
+        return this.coffeeRepository.find()
     }
 
-    findOne(id: string) {
-        const coffee = this.coffees.find(item => item.id === +id);
+    async findOne(id: number) {
+        const coffee = await this.coffeeRepository.findOne({ where: { id } });
         if (!coffee) {
             // HTTP EXCEPTIONS TAKES TWO PARAMETERS, MESSAGE AND STATUS CODE
             // throw new HttpException(`Coffee #${id} not found`, HttpStatus.NOT_FOUND);
@@ -27,21 +27,24 @@ export class CoffeesService {
     }
 
     create(createCoffeeDto: CreateCoffeeDto) {
-        this.coffees.push({ ...createCoffeeDto, id: this.coffees.length + 1 });
-        return createCoffeeDto;
+        const coffee = this.coffeeRepository.create(createCoffeeDto);
+        return this.coffeeRepository.save(coffee);
     }
 
-    update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
-        const existingCoffee = this.findOne(id);
-        if (!existingCoffee) {
+    async update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
+        const coffee = await this.coffeeRepository.preload({
+            id: +id,
+            ...updateCoffeeDto,
+        });
+        if (!coffee) {
             throw new NotFoundException(`Coffee #${id} not found`);
         }
-        this.coffees = this.coffees.map(item => {
-            if (item.id === +id) {
-                Object.assign(item, updateCoffeeDto);
-            }
-            return item;
-        })
+        return this.coffeeRepository.save(coffee);
+    }
+
+    async remove(id: string) {
+        const coffee = await this.findOne(+id);
+        return this.coffeeRepository.remove(coffee);
     }
 
 }
