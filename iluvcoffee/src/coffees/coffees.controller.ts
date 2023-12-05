@@ -3,12 +3,16 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { COFFEE_BRANDS } from './coffees.constant';
+import { REQUEST } from '@nestjs/core';
 // import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('coffees')
 export class CoffeesController {
-    constructor(private readonly coffeesService: CoffeesService,
-        @Inject(COFFEE_BRANDS) coffeeBrands: string[]
+    constructor(
+        private readonly coffeesService: CoffeesService,
+        @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+        // THIS MIGHT HURT PERFORMANCE
+        @Inject(REQUEST) private readonly request: Request,
     ) {
         console.log(coffeeBrands);
     }
