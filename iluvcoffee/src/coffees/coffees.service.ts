@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
@@ -7,7 +7,8 @@ import { Connection, Repository } from 'typeorm';
 import { Flavor } from './entities/flavor.entity';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Event } from 'src/events/entities/event.entity';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import coffeesConfig from './config/coffees.config';
 
 @Injectable()
 export class CoffeesService {
@@ -18,12 +19,22 @@ export class CoffeesService {
         private readonly flavorRepository: Repository<Flavor>,
         private readonly connection: Connection,
         private readonly configService: ConfigService,
+        @Inject(coffeesConfig.KEY)
+        private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
     ) {
+        // USING CONFIG SERVICE
         // const databaseHost = this.configService.get<string>('DATABASE_HOST', 'localhost')
 
         // USING CONFIG APP NESTED OBJECTS
-        const databaseHost = this.configService.get('database.host', 'localhost')
-        console.log({ databaseHost })
+        // const databaseHost = this.configService.get('database.host', 'localhost')
+
+        // USING CONFIG NAMESPACES AND PARTIAL REGISTRATION
+        // const databaseHost = this.configService.get('coffees')
+        // const databaseHost = this.configService.get('coffees.foo')
+        // console.log({ databaseHost })
+
+        // INJECTING NAMESPACE FOR MORE TYPE SAFETY
+        console.log(coffeesConfiguration.foo)
     }
 
     findAll() {
