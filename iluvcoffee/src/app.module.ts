@@ -4,11 +4,16 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi'
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.environment', '.env'],
-      ignoreEnvFile: process.env.NODE_ENV === 'production'
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
+      validationSchema: Joi.object({
+        DATABASE_HOST: Joi.required(),
+        DATABASE_PORT: Joi.number().default(5432)
+      })
     }),
     CoffeesModule,
     TypeOrmModule.forRoot({
