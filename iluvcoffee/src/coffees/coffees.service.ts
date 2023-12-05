@@ -16,7 +16,9 @@ export class CoffeesService {
         @InjectRepository(Flavor)
         private readonly flavorRepository: Repository<Flavor>,
         private readonly connection: Connection
-    ) { }
+    ) {
+        console.log('coffeeService instantiated')
+    }
 
     findAll() {
         return this.coffeeRepository.find({

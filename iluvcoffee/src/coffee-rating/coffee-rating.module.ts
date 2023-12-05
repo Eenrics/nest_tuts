@@ -7,12 +7,13 @@ import { DatabaseModule } from 'src/database/database.module';
 @Module({
   imports: [
     CoffeesModule,
-    DatabaseModule.register({
-      type: 'postgres',
-      host: 'localhost',
-      password: 'pass123',
-      port: 5432
-    })
+    // REGISTERING DYNAMIC MODULE
+    // DatabaseModule.register({
+    //   type: 'postgres',
+    //   host: 'localhost',
+    //   password: 'pass123',
+    //   port: 5432
+    // })
   ],
   providers: [CoffeeRatingService],
   controllers: [CoffeeRatingController]
