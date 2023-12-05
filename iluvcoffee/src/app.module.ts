@@ -6,7 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: ['.environment', '.env'],
+      ignoreEnvFile: process.env.NODE_ENV === 'production'
+    }),
     CoffeesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
