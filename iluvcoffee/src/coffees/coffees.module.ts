@@ -41,6 +41,13 @@ class CoffeeBrandsFactory {
             provide: 'COFFEE_BRANDS_FACTORY',
             useFactory: (brandsFactory: CoffeeBrandsFactory) => brandsFactory.create(),
             inject: [CoffeeBrandsFactory],
+        },
+        {
+            provide: 'ASYNC_COFFEE_BRAND',
+            useFactory: async (): Promise<string[]> => {
+                const coffeeBrand = await Promise.resolve(['buddy', 'nestcoffee'])
+                return coffeeBrand
+            }
         }
     ],
     exports: [CoffeesService]
