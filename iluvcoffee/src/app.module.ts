@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
+import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [CoffeesModule, TypeOrmModule.forRoot({
     type: 'postgres',
@@ -18,7 +19,7 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
     // MAKE SURE TO DISABLE SYNCHRONIZE IN PRODUCTION
     // AUTOMATICALLY SYNCHRONIZES ENTITIES AND METADATA WITH DATABASE SCHEMA / TABLES
     synchronize: true,
-  }), CoffeeRatingModule],
+  }), CoffeeRatingModule, DatabaseModule],
   controllers: [AppController],
   providers: [AppService],
 })
