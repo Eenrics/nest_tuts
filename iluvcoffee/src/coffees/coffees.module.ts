@@ -13,13 +13,23 @@ class MockCoffeeService {
         return 'mock-coffees';
     }
 }
+
+class ConfigService { }
+class DevelopmentConfigService { }
+class ProductionConfigService { }
 @Module({
     imports: [
         // MAKE TYPEORM MODULE AWARE OF THE ENTITIES
         TypeOrmModule.forFeature([Coffee, Flavor, Event])
     ],
     controllers: [CoffeesController],
-    providers: [CoffeesController, { provide: CoffeesService, useValue: new MockCoffeeService }, { provide: COFFEE_BRANDS, useValue: ['buddy brew', 'nescafe'] }],
+    providers: [
+        CoffeesController,
+        // CoffeesService,
+        { provide: CoffeesService, useValue: new MockCoffeeService },
+        { provide: COFFEE_BRANDS, useValue: ['buddy brew', 'nescafe'] },
+        { provide: ConfigService, useClass: process.env.NODE_ENV === 'development' ? DevelopmentConfigService : ProductionConfigService }
+    ],
     exports: [CoffeesService]
 })
 export class CoffeesModule { }
