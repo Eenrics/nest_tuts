@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Injectable, Module } from '@nestjs/common';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -17,6 +17,13 @@ class MockCoffeeService {
 class ConfigService { }
 class DevelopmentConfigService { }
 class ProductionConfigService { }
+
+@Injectable()
+class CoffeeBrandsFactory {
+    create() {
+        return ['buddy brew', 'nescafe'];
+    }
+}
 @Module({
     imports: [
         // MAKE TYPEORM MODULE AWARE OF THE ENTITIES
@@ -28,7 +35,13 @@ class ProductionConfigService { }
         // CoffeesService,
         { provide: CoffeesService, useValue: new MockCoffeeService },
         { provide: COFFEE_BRANDS, useValue: ['buddy brew', 'nescafe'] },
-        { provide: ConfigService, useClass: process.env.NODE_ENV === 'development' ? DevelopmentConfigService : ProductionConfigService }
+        { provide: ConfigService, useClass: process.env.NODE_ENV === 'development' ? DevelopmentConfigService : ProductionConfigService },
+        CoffeeBrandsFactory,
+        {
+            provide: 'COFFEE_BRANDS_FACTORY',
+            useFactory: (brandsFactory: CoffeeBrandsFactory) => brandsFactory.create(),
+            inject: [CoffeeBrandsFactory],
+        }
     ],
     exports: [CoffeesService]
 })
