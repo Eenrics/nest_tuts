@@ -1,13 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
+// HERE WE ARE USING VALIDATION PIPE AT CONTROLLER LEVEL
+// @UsePipes(ValidationPipe)
 @Controller('coffees')
 export class CoffeesController {
     constructor(private readonly coffeesService: CoffeesService) { }
 
+    // HERE WE ARE USING VALIDATION PIPE AT METHOD / ROUTE LEVEL
+    // @UsePipes(ValidationPipe)
     @Get()
     findAll() {
         return 'This action returns all coffees';
@@ -15,7 +19,11 @@ export class CoffeesController {
 
     // AS A BEST PRACTICE, USE PATH PARAMETERS FOR RESOURCE AND QUERY PARAMETERS TO FILTER OR SORT THAT RESOURCE
     @Get('pagination')
-    paginate(@Query() paginationQuery) {
+    paginate(
+        // HERE WE ARE USING VALIDATION PIPE AT PARAMETER LEVEL / WILL WORK ONLY FOR PAGINATIONQUERYDTO
+        // @Query(ValidationPipe) paginationQuery
+        @Query() paginationQuery
+    ) {
         const { limit, offset } = paginationQuery;
         return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
     }

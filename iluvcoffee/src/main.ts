@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // HERE WE OURSELF INSTANTIATED THE VALIDATION PIPE. 
+  // OPTIONALLY WE CAN LET NEST INSTANTIATE IT FOR US BY LISTING IT IN PROVIDERS ARRAY OF APP.MODULE.TS
   app.useGlobalPipes(new ValidationPipe({
     // ANY PROPERTY NOT INCLUDED IN WHILE LIST WILL BE REMOVED
     whitelist: true,
