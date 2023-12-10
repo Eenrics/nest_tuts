@@ -3,6 +3,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 // HERE WE ARE USING VALIDATION PIPE AT CONTROLLER LEVEL
 // @UsePipes(ValidationPipe)
@@ -12,6 +13,8 @@ export class CoffeesController {
 
     // HERE WE ARE USING VALIDATION PIPE AT METHOD / ROUTE LEVEL
     // @UsePipes(ValidationPipe)
+    // SETTING CUSTOM DECORATOR FOR PUBLIC ROUTES
+    @Public()
     @Get()
     findAll() {
         return 'This action returns all coffees';
