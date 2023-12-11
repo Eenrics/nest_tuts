@@ -26,6 +26,8 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter())
   app.useGlobalInterceptors(new WrapResponseInterceptor(), new TimeoutInterceptor())
   // app.useGlobalGuards(new ApiKeyGuard())
+  // MIDDLEWARE IS A FUNCTION THAT IS CALLED BEFORE THE ROUTE HANDLER AND ANY OTHER BUILDING BLOCKS ARE PROCESSED(GUARDS, INTERCEPTORS, PIPES)
+  // CLASS MIDDLEWARE IS INJECTABLE AND CAN HAVE DEPENDENCIES, BUT FUNCTION MIDDLEWARE IS NOT INJECTABLE AND IT IS STATELESS
   await app.listen(3000);
 }
 bootstrap();
