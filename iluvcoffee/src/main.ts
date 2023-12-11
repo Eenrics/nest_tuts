@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ApiKeyGuard } from './common/guards/api-key.guard';
 import { WrapResponseInterceptor } from './common/interceptor/wrap-response.interceptor';
+import { TimeoutInterceptor } from './common/interceptor/timeout.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,8 +22,9 @@ async function bootstrap() {
       enableImplicitConversion: true
     }
   }))
+  // WE CAN NOT BIND OUR GUARDS/FILTERS/INTERCEPTORS/PIPES IF THEY HAVE DEPENDENCIES
   app.useGlobalFilters(new HttpExceptionFilter())
-  app.useGlobalInterceptors(new WrapResponseInterceptor())
+  app.useGlobalInterceptors(new WrapResponseInterceptor(), new TimeoutInterceptor())
   // app.useGlobalGuards(new ApiKeyGuard())
   await app.listen(3000);
 }

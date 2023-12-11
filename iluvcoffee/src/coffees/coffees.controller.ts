@@ -16,7 +16,8 @@ export class CoffeesController {
     // SETTING CUSTOM DECORATOR FOR PUBLIC ROUTES
     @Public()
     @Get()
-    findAll() {
+    async findAll() {
+        await new Promise(resolve => setTimeout(resolve, 5000))
         return 'This action returns all coffees';
     }
 
