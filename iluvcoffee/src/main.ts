@@ -35,7 +35,6 @@ async function bootstrap() {
     .setTitle('ILuvCoffee')
     .setDescription('Coffee API')
     .setVersion('1.0')
-    .addTag('coffee')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

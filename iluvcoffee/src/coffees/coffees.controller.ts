@@ -6,10 +6,15 @@ import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
-import { ApiForbiddenResponse, ApiResponse } from '@nestjs/swagger';
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 // HERE WE ARE USING VALIDATION PIPE AT CONTROLLER LEVEL
 // @UsePipes(ValidationPipe)
+
+// WITH TAGS, WE CAN GROUP AN ORGANIZED SETS OF ENDPOINTS TOGETHER
+// TAGS ALLOW US TO BREAK DOWN OUR RESOURCE INTO LOGICAL BOUNDED CONTEXT MAKING IT MUCH EASIER TO NAVIGATE THROUGH SWAGGER UI
+// WE CAN ALSO APPLY TAGS AT METHOD LEVEL
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
     constructor(private readonly coffeesService: CoffeesService) { }
