@@ -6,6 +6,7 @@ import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
+import { ApiForbiddenResponse, ApiResponse } from '@nestjs/swagger';
 
 // HERE WE ARE USING VALIDATION PIPE AT CONTROLLER LEVEL
 // @UsePipes(ValidationPipe)
@@ -15,6 +16,9 @@ export class CoffeesController {
 
     // HERE WE ARE USING VALIDATION PIPE AT METHOD / ROUTE LEVEL
     // @UsePipes(ValidationPipe)
+    // TO SPECIFY OTHER EXAMPLE RESPONSES
+    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiForbiddenResponse({ description: 'Forbidden.' })
     // SETTING CUSTOM DECORATOR FOR PUBLIC ROUTES
     @Public()
     @Get()
