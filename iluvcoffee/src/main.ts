@@ -5,6 +5,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ApiKeyGuard } from './common/guards/api-key.guard';
 import { WrapResponseInterceptor } from './common/interceptor/wrap-response.interceptor';
 import { TimeoutInterceptor } from './common/interceptor/timeout.interceptor';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,6 +29,17 @@ async function bootstrap() {
   // app.useGlobalGuards(new ApiKeyGuard())
   // MIDDLEWARE IS A FUNCTION THAT IS CALLED BEFORE THE ROUTE HANDLER AND ANY OTHER BUILDING BLOCKS ARE PROCESSED(GUARDS, INTERCEPTORS, PIPES)
   // CLASS MIDDLEWARE IS INJECTABLE AND CAN HAVE DEPENDENCIES, BUT FUNCTION MIDDLEWARE IS NOT INJECTABLE AND IT IS STATELESS
+
+  // THE OPENAPI SPECIFICATION IS A LANGUAGE AGNOSTIC DEFINITION FORMAT USED FOR DESCRIBING REST APIS
+  const options = new DocumentBuilder()
+    .setTitle('ILuvCoffee')
+    .setDescription('Coffee API')
+    .setVersion('1.0')
+    .addTag('coffee')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
 bootstrap();

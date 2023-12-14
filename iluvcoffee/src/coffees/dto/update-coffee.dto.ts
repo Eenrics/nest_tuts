@@ -1,4 +1,5 @@
-import { PartialType } from "@nestjs/mapped-types";
+// import { PartialType } from "@nestjs/mapped-types";
+import { PartialType } from "@nestjs/swagger";
 import { CreateCoffeeDto } from "./create-coffee.dto";
 // DTOs ARE USEFUL FOR DATA COMING IN AND GOING OUT
 // export class UpdateCoffeeDto {
